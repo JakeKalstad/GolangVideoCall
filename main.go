@@ -31,14 +31,12 @@ func Initialize() error {
 }
 
 func wsLoop(ctx context.Context, cancelFunc context.CancelFunc, ws *websocket.Conn, topic string, userID string) {
-	log.Printf("Starting wsLoop for %s...", userID)
 	defer closeWS(ws)
 	for {
 		if _, message, err := ws.Read(ctx); err != nil {
 			log.Printf("Error reading message %s", err)
 			break
 		} else {
-			log.Printf("Received message to websocket: ")
 			msg := &nats.Msg{Subject: topic, Data: message, Reply: userID}
 			if err = natsConn.PublishMsg(msg); err != nil {
 				log.Printf("Could not publish message: %s", err)
@@ -48,15 +46,12 @@ func wsLoop(ctx context.Context, cancelFunc context.CancelFunc, ws *websocket.Co
 
 	}
 	cancelFunc()
-	log.Printf("Shutting down wsLoop for %s...", userID)
 }
 
 func natsConnLoop(cctx, ctx context.Context, ws *websocket.Conn, topic string, userID string) {
-	log.Printf("Starting natsConnLoop for %s...", userID)
 	_, err := natsConn.Subscribe(topic, func(m *nats.Msg) {
 		m.Ack()
 		if m.Reply == userID {
-			log.Println("skipping message from self")
 			return
 		}
 		if err := ws.Write(ctx, websocket.MessageText, m.Data); err != nil {
@@ -177,7 +172,6 @@ func (api *API) index(w http.ResponseWriter, r *http.Request) {
 	ua := r.Header.Get("User-Agent")
 	t, err := compileTemplates(ua, TEMPLATE, "content/index.html")
 	if err != nil {
-		fmt.Println(err.Error())
 		panic(err)
 	}
 	err = t.ExecuteTemplate(w, "layout", &HomePageData{

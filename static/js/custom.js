@@ -18,7 +18,6 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream =>
 
 peerConnection.ontrack = evt => {
     let element = document.getElementById('remote_video');
-    console.dir(element)
     if (element.srcObject === evt.streams[0]) return;
     element.srcObject = evt.streams[0];
     element.play();
@@ -30,7 +29,6 @@ peerConnection.onicecandidate = evt => {
 
 ws.onmessage = (evt) => {
     const message = JSON.parse(evt.data);
-    console.dir(message)
     switch (message.type) {
         case 'offer': {
             peerConnection.setRemoteDescription(message).then(() => {
