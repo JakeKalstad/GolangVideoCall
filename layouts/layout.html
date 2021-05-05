@@ -1,0 +1,54 @@
+{{ define "layout" }}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="canonical" href="{{ .CanonicalURL }}" /> 
+    <meta name="description" content="{{.Content}}" />
+    <meta name="author" content="videochat" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <title>{{.Title}}</title> 
+    <link
+      rel="preload"
+      href="/static/css/custom.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    /> 
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "SoftwareApplication",
+        "applicationCategory": "EntertainmentApplicatione",
+        "name": "videochat",
+        "url": "https://DUMMY.com",
+        "sameAs": [
+          "https://twitter.com/DUMMY",
+          "https://www.instagram.com/DUMMY/"
+        ],
+        "operatingSystem": "web",
+        "image": "https://DUMMY.com/static/img/logo.png",
+        "datePublished": "2020-08-27",
+        "publisher": {
+          "@type": "Organization",
+          "name": "DUMMY"
+        }
+      }
+    </script> 
+  </head>
+  <body> 
+      <div id="page-content-wrapper" style="width: 100%">
+        <div class="container-fluid"  style="padding:0px;">
+          <div style="width: 100%">{{ template "content" . }}</div>
+        </div>
+      </div>
+    </div> 
+    <script
+      defer
+      type="application/javascript"
+      src="/static/js/custom.js"
+    ></script> 
+  </body>
+</html>
+{{ end }}

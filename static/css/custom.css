@@ -1,0 +1,15 @@
+body {
+    padding-bottom: 0;
+    background-color: #343a40;
+    font-family: josefin sans,sans-serif
+}
+
+.local {
+    position:absolute;
+    height:128px;
+    border-radius:36px;
+}
+.remote {
+    height:100vh;
+    width:100vw;
+}
